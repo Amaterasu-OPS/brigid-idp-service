@@ -1,0 +1,33 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    container_name: idp-service
+    ports:
+      - "8001:8080"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    image: postgres:16
+    container_name: idp-service-db
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: idp-service-pass
+      POSTGRES_USER: idp-service-user
+      POSTGRES_DB: idp-service-db
+    volumes:
+      - ./storage/db:/var/lib/postgresql/data
+
+  flyway:
+    image: flyway/flyway
+    container_name: idp-service-migrate
+    volumes:
+      - ./migrations:/flyway/sql
+    command: -url=jdbc:postgresql://db:5432/idp-service-db -schemas=public -user=idp-service-user -password=idp-service-pass -connectRetries=60 migrate
+    depends_on:
+      - db

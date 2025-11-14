@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: Briged IdP
+
+  datasource:
+    url: jdbc:postgresql://db:5432/idp-service-db
+    username: idp-service-user
+    password: idp-service-pass
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
