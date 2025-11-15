@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/api/v1/health")
-class HealthRouter() {
+class HealthRouter(
+    private val controller: HealthController
+) {
     @GetMapping
-    fun healthRoute(controller: HealthController): ResponseEntity<String> = controller.handler("");
+    fun healthRoute(): ResponseEntity<String> = controller.handler("");
 }
