@@ -1,4 +1,4 @@
-package com.brigid.idp.dto.user
+package com.brigid.idp.dto.user.add
 
 import java.time.LocalDate
 
