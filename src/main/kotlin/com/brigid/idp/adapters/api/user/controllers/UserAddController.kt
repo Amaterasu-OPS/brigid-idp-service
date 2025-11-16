@@ -2,8 +2,8 @@ package com.brigid.idp.adapters.api.user.controllers
 
 import com.brigid.idp.application.api.ControllerInterface
 import com.brigid.idp.application.use_cases.user.UserAddCase
-import com.brigid.idp.dto.user.UserAddRequestDTO
-import com.brigid.idp.dto.user.UserAddResponseDTO
+import com.brigid.idp.dto.user.add.UserAddRequestDTO
+import com.brigid.idp.dto.user.add.UserAddResponseDTO
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Controller

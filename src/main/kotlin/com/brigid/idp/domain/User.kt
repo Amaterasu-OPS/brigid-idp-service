@@ -1,5 +1,6 @@
 package com.brigid.idp.domain
 
+import java.io.Serializable
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.UUID
@@ -14,4 +15,4 @@ data class User(
     val status: Int,
     val createdAt: LocalDateTime,
     val updatedAt: LocalDateTime
-)
+): Serializable

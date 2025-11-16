@@ -1,7 +1,9 @@
 package com.brigid.idp.guard
 
-import com.brigid.idp.exceptions.DatabaseException
+import com.brigid.idp.exceptions.ApiException
+import com.brigid.idp.exceptions.DatabaseApiException
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.validation.FieldError
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -33,12 +35,23 @@ class ExceptionHandler {
         )
     }
 
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler(DatabaseException::class)
-    fun onDatabaseException(exception: DatabaseException): ApiErrorResponse {
-        return ApiErrorResponse(
-            message = exception.localizedMessage ?: exception.message ?: "A database error occurred.",
-            details = null
+    @ExceptionHandler(DatabaseApiException::class)
+    fun onDatabaseException(exception: DatabaseApiException): ResponseEntity<ApiErrorResponse> {
+        return ResponseEntity.status(exception.status).body(
+            ApiErrorResponse(
+                message = exception.localizedMessage ?: exception.message ?: "A database error occurred.",
+                details = null
+            )
+        )
+    }
+
+    @ExceptionHandler(ApiException::class)
+    fun onApiException(exception: ApiException): ResponseEntity<ApiErrorResponse> {
+        return ResponseEntity.status(exception.status).body(
+            ApiErrorResponse(
+                message = exception.localizedMessage ?: exception.message ?: "A API error occurred.",
+                details = null
+            )
         )
     }
 }

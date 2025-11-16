@@ -23,6 +23,12 @@ services:
     volumes:
       - ./storage/db:/var/lib/postgresql/data
 
+  redis:
+    image: "redis:7.0-alpine"
+    container_name: idp-service-redis
+    ports:
+      - "6380:6379"
+
   flyway:
     image: flyway/flyway
     container_name: idp-service-migrate
