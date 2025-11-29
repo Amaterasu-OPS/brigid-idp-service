@@ -26,10 +26,8 @@ class UserCredentialsCase(
     private val objectMapper: ObjectMapper,
 ) : UseCaseInterface<UserCredentialsRequestDTO, UserCredentialsResponseDTO, UserModel>(repository) {
     override fun handler(body: UserCredentialsRequestDTO): UserCredentialsResponseDTO {
-        var user: UserModel?
-
-        try {
-            user = repository.findByEmail(body.email)
+        val user = try {
+            repository.findByEmail(body.email)
         } catch (e: Exception) {
             throw DatabaseApiException("Error on fetching user by email", 500)
         }
@@ -51,7 +49,7 @@ class UserCredentialsCase(
 
         try {
             redis.set(token, result, 3600L, TimeUnit.SECONDS)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             throw DatabaseApiException("Error on saving token to cache", 500)
         }
 
