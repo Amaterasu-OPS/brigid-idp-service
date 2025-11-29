@@ -27,21 +27,28 @@ repositories {
 }
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter")
-	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-    implementation("redis.clients:jedis")
-	implementation("org.springframework.boot:spring-boot-starter-web")
-	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+	implementation("org.springframework.boot:spring-boot-starter:3.5.7")
+	implementation("org.springframework.boot:spring-boot-starter-data-jpa:3.5.7")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis:3.5.7")
+	implementation("org.springframework.boot:spring-boot-starter-web:3.5.7")
+    implementation("org.springframework.security:spring-security-crypto:7.0.0")
+    implementation("redis.clients:jedis:7.1.0")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.20.1")
+	implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.20.1")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.springframework.security:spring-security-crypto")
-	compileOnly("org.projectlombok:lombok")
-	runtimeOnly("org.postgresql:postgresql")
-	annotationProcessor("org.projectlombok:lombok")
-	testImplementation("org.springframework.boot:spring-boot-starter-test")
-	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    implementation("io.jsonwebtoken:jjwt-api:0.13.0")
+
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.13.0")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.13.0")
+	compileOnly("org.projectlombok:lombok:1.18.42")
+	runtimeOnly("org.postgresql:postgresql:42.7.8")
+
+	annotationProcessor("org.projectlombok:lombok:1.18.42")
+
+	testImplementation("org.springframework.boot:spring-boot-starter-test:3.5.7")
+	testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:2.2.21")
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher:6.1.0-M1")
 }
 
 kotlin {

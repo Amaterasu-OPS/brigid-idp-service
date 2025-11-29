@@ -17,11 +17,9 @@ class UserAddCase(
     private val passwordEncoder: BCryptPasswordEncoder = BCryptPasswordEncoder(14)
 ): UseCaseInterface<UserAddRequestDTO, User, UserModel>(repository) {
     override fun handler(body: UserAddRequestDTO): User {
-        var existingUser: UserModel?
-
-        try {
-            existingUser = repository.findByEmail(body.email)
-        } catch (e: Exception) {
+        val existingUser = try {
+             repository.findByEmail(body.email)
+        } catch (_: Exception) {
             throw DatabaseApiException("Error on checking existing user", 500)
         }
 
@@ -29,18 +27,20 @@ class UserAddCase(
             throw DatabaseApiException("User with email ${body.email} already exists", 400)
         }
 
+        val pwd = passwordEncoder.encode(body.password) ?: ""
+
         try {
             val user = repository.save(UserModel(
                 name = body.name,
                 familyName = body.familyName,
                 email = body.email,
-                password = passwordEncoder.encode(body.password),
+                password = pwd,
                 birthDate = body.birthDate,
                 gender = body.gender.toString(),
             ))
 
             return mapper.modelToEntity(user)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             throw DatabaseApiException("Error on saving user", 500)
         }
     }
