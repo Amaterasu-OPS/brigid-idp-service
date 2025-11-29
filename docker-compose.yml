@@ -1,5 +1,5 @@
 services:
-  api:
+  api-idp:
     build:
       context: .
       dockerfile: docker/dev/Dockerfile
@@ -11,9 +11,12 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - db
+      - db-idp
+      - redis-idp
+    networks:
+      - auth-service-network
 
-  db:
+  db-idp:
     image: postgres:16
     container_name: idp-service-db
     ports:
@@ -24,18 +27,28 @@ services:
       POSTGRES_DB: idp-service-db
     volumes:
       - ./storage/db:/var/lib/postgresql/data
+    networks:
+      - auth-service-network
 
-  redis:
+  redis-idp:
     image: "redis:7.0-alpine"
     container_name: idp-service-redis
     ports:
       - "6380:6379"
+    networks:
+      - auth-service-network
 
-  flyway:
+  flyway-idp:
     image: flyway/flyway
     container_name: idp-service-migrate
     volumes:
       - ./migrations:/flyway/sql
-    command: -url=jdbc:postgresql://db:5432/idp-service-db -schemas=public -user=idp-service-user -password=idp-service-pass -connectRetries=60 migrate
+    command: -url=jdbc:postgresql://db-idp:5432/idp-service-db -schemas=public -user=idp-service-user -password=idp-service-pass -connectRetries=60 migrate
     depends_on:
-      - db
+      - db-idp
+    networks:
+      - auth-service-network
+
+networks:
+  auth-service-network:
+    name: auth-service-network
