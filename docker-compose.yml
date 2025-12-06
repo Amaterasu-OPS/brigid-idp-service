@@ -6,15 +6,13 @@ services:
     env_file:
       - .env
     container_name: idp-service
-    ports:
-      - "8001:8080"
     volumes:
       - .:/app
     depends_on:
       - db-idp
       - redis-idp
     networks:
-      - auth-service-network
+      - amaterasu-network
 
   db-idp:
     image: postgres:16
@@ -28,7 +26,7 @@ services:
     volumes:
       - ./storage/db:/var/lib/postgresql/data
     networks:
-      - auth-service-network
+      - amaterasu-network
 
   redis-idp:
     image: "redis:7.0-alpine"
@@ -36,7 +34,7 @@ services:
     ports:
       - "6380:6379"
     networks:
-      - auth-service-network
+      - amaterasu-network
 
   flyway-idp:
     image: flyway/flyway
@@ -47,8 +45,9 @@ services:
     depends_on:
       - db-idp
     networks:
-      - auth-service-network
+      - amaterasu-network
 
 networks:
-  auth-service-network:
-    name: auth-service-network
+  amaterasu-network:
+    name: amaterasu-network
+    driver: bridge
