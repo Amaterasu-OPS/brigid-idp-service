@@ -1,5 +1,5 @@
 <samp><h6 align="center">#backend, #project, #idp</h6></samp>
-# <samp align="center"><h2 align="center">Briged IdP</h2></samp>
+# <samp align="center"><h2 align="center">Brigid IdP</h2></samp>
 
 <p align="center">
   <img src="https://img.shields.io/badge/kotlin-22272E?&style=for-the-badge&logo=kotlin&logoColor=7F52FF">
@@ -10,7 +10,7 @@
 <br/>
 
 Overview
-Briged IdP is an identity provider for user authentication. It offers username/password login, JWT token issuance, and token revocation using Redis.
+Brigid IdP is an identity provider for user authentication. It offers username/password login, JWT token issuance, and token revocation using Redis.
 
 ## Run
 

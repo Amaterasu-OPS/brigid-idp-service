@@ -28,7 +28,7 @@ class UserCredentialsCase(
     override fun handler(body: UserCredentialsRequestDTO): UserCredentialsResponseDTO {
         val user = try {
             repository.findByEmail(body.email)
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             throw DatabaseApiException("Error on fetching user by email", 500)
         }
 
