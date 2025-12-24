@@ -2,18 +2,23 @@ package com.brigid.idp.adapters.api.user
 
 import com.brigid.idp.adapters.api.user.controllers.UserAddController
 import com.brigid.idp.adapters.api.user.controllers.UserCredentialsController
+import com.brigid.idp.adapters.api.user.controllers.UserGetController
 import com.brigid.idp.adapters.api.user.controllers.UserVerifyCredentialController
 import com.brigid.idp.dto.user.add.UserAddRequestDTO
 import com.brigid.idp.dto.user.add.UserAddResponseDTO
 import com.brigid.idp.dto.user.credentials.UserCredentialsRequestDTO
 import com.brigid.idp.dto.user.credentials.UserCredentialsResponseDTO
+import com.brigid.idp.dto.user.get.UserGetResponseDTO
 import com.brigid.idp.dto.user.verifyCredential.UserVerifyCredentialRequestDTO
 import com.brigid.idp.dto.user.verifyCredential.UserVerifyCredentialResponseDTO
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.util.UUID
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -21,6 +26,7 @@ class UserRouter(
     private val userAddController: UserAddController,
     private val userCredentialsController: UserCredentialsController,
     private val userVerifyCredentialController: UserVerifyCredentialController,
+    private val userGetController: UserGetController
 ) {
     @PostMapping("/add")
     fun userAddRoute(
@@ -36,4 +42,9 @@ class UserRouter(
     fun userVerifyCredential(
         @RequestBody data: UserVerifyCredentialRequestDTO,
     ): ResponseEntity<UserVerifyCredentialResponseDTO> = userVerifyCredentialController.handler(data)
+
+    @GetMapping("/{id}")
+    fun userCredentialsRoute(
+        @PathVariable id: UUID,
+    ): ResponseEntity<UserGetResponseDTO> = userGetController.handler(id)
 }
